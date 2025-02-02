@@ -29,7 +29,7 @@ public class GenVideoApiTest {
         // 1. 配置文件
         Configuration configuration = new Configuration();
         configuration.setApiHost("https://open.bigmodel.cn/");
-        configuration.setApiSecretKey("f747bf4c0f79466c976bf70d285652c7.xl0vlvP0LMpQouFG");
+        configuration.setApiSecretKey("");
         configuration.setLevel(HttpLoggingInterceptor.Level.BODY);
         // 2. 会话工厂
         OpenAiSessionFactory factory = new DefaultOpenAiSessionFactory(configuration);

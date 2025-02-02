@@ -334,6 +334,72 @@ public void test_genImages() throws Exception {
 </details>
 
 
+#### 2.1.7 根据文字生成视频
+
+<details><summary><a>👉查看代码</a></summary></br>
+
+```java
+@Test
+public void test_genVideo() throws Exception {
+   VideoCompletionRequest request = new VideoCompletionRequest();
+   request.setModel(Model.COGVIDEOX_Flash);
+   request.setPrompt("生成一个猫拍手的动画，模仿Happy猫");
+   VideoCompletionResponse response = openAiSession.genVideo(request);
+   log.info("测试结果：{}", JSON.toJSONString(response));
+}
+```
+
+</details>
+
+
+#### 2.1.8 异步根据文字生成视频
+
+<details><summary><a>👉查看代码</a></summary></br>
+
+```java
+@Test
+public void test_genVideoAsync() throws Exception {
+   VideoCompletionRequest request = new VideoCompletionRequest();
+   request.setModel(Model.COGVIDEOX_Flash);
+   request.setPrompt("生成一个猫拍手的动画，模仿Happy猫");
+   String id = openAiSession.getVideoTaskId(request);
+   log.info("生成视频任务id：{}", id);
+
+   Thread.sleep(60 * 1000);
+   VideoCompletionResponse response = openAiSession.getVideoByTaskId(id, request.getModelEnum());
+   log.info("测试结果：{}", JSON.toJSONString(response));
+}
+
+@Test
+public void test_genVideoAsync2() throws Exception {
+   VideoCompletionRequest request = new VideoCompletionRequest();
+   request.setModel(Model.COGVIDEOX_Flash);
+   request.setPrompt("生成一个猫拍手的动画，模仿Happy猫");
+   String id = openAiSession.getVideoTaskId(request);
+   log.info("生成视频任务id：{}", id);
+
+   Thread.sleep(60 * 1000);
+   int count = 20; //处理中状态重试次数
+   while (count-- > 0) {
+      VideoCompletionResponse response = openAiSession.tryGetVideoByTaskId(id, request.getModelEnum());
+      // 成功则返回结果
+      if(response.getTaskStatus().equals(VideoCompletionResponse.taskStatus.SUCCESS.getStatus())) {
+         log.info("测试结果：{}", JSON.toJSONString(response));
+         return;
+      }
+      // 失败则抛出异常
+      else if(response.getTaskStatus().equals(VideoCompletionResponse.taskStatus.FAIL.getStatus())) {
+         throw new RuntimeException("生成视频请求失败！");
+      }
+      // 处理中则等待10s再请求
+      Thread.sleep( 10 * 1000);
+   }
+   throw new RuntimeException("生成视频请求超时！");
+}
+```
+
+</details>
+
 ### 2.2 脚本测试
 
 ```java
