@@ -3,6 +3,7 @@ package cn.bugstack.chatglm;
 import cn.bugstack.chatglm.model.*;
 import io.reactivex.Single;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -30,4 +31,13 @@ public interface IOpenAiApi {
     @POST(cogview3)
     Single<ImageCompletionResponse> genImages(@Body ImageCompletionRequest imageCompletionRequest);
 
+    String CogVideoX = "api/paas/v4/videos/generations";
+
+    @POST(CogVideoX)
+    Single<VideoRequestIdTaskCompletionResponse> getVideoTaskId(@Body VideoCompletionRequest videoCompletionRequest);
+
+    String CogVideoXFinish = "api/paas/v4/async-result/{id}";
+
+    @GET(CogVideoXFinish)
+    Single<VideoCompletionResponse> genVideo(@Path("id") String id);
 }

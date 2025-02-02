@@ -105,4 +105,9 @@ public class GLMOldExecutor implements Executor {
         throw new RuntimeException("旧版无图片生成接口");
     }
 
+    @Override
+    public VideoCompletionResponse genVideo(VideoCompletionRequest request) {
+        throw new RuntimeException("旧版无视频生成接口");
+    }
+    
 }

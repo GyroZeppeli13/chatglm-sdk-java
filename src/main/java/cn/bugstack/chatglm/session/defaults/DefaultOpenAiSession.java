@@ -61,4 +61,13 @@ public class DefaultOpenAiSession implements OpenAiSession {
         return configuration;
     }
 
+    @Override
+    public VideoCompletionResponse genVideo(VideoCompletionRequest videoCompletionRequest) throws Exception {
+        Executor executor = executorGroup.get(videoCompletionRequest.getModelEnum());
+        if (null == executor) throw new RuntimeException(videoCompletionRequest.getModel() + " 模型执行器尚未实现！");
+        return executor.genVideo(videoCompletionRequest);
+    }
+
+
+
 }

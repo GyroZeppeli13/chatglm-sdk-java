@@ -1,9 +1,6 @@
 package cn.bugstack.chatglm.executor;
 
-import cn.bugstack.chatglm.model.ChatCompletionRequest;
-import cn.bugstack.chatglm.model.ChatCompletionSyncResponse;
-import cn.bugstack.chatglm.model.ImageCompletionRequest;
-import cn.bugstack.chatglm.model.ImageCompletionResponse;
+import cn.bugstack.chatglm.model.*;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 
@@ -46,5 +43,14 @@ public interface Executor {
      * @return 应答结果
      */
     ImageCompletionResponse genImages(ImageCompletionRequest request) throws Exception;
+
+    /**
+     * 视频生成接口
+     *
+     * @param request 请求信息
+     * @return 应答结果
+     */
+    VideoCompletionResponse genVideo(VideoCompletionRequest request) throws Exception;
+
 
 }

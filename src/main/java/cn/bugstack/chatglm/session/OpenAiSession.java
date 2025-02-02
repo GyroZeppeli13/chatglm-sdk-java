@@ -26,4 +26,7 @@ public interface OpenAiSession {
 
     Configuration configuration();
 
+    VideoCompletionResponse genVideo(VideoCompletionRequest videoCompletionRequest) throws Exception;
+
+
 }

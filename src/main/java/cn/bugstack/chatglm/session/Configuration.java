@@ -107,6 +107,12 @@ public class Configuration {
         this.executorGroup.put(Model.GLM_4_Flash, glmExecutor);
         this.executorGroup.put(Model.GLM_4_AllTools, glmExecutor);
         this.executorGroup.put(Model.COGVIEW_3, glmExecutor);
+        this.executorGroup.put(Model.COGVIEW_4, glmExecutor);
+        this.executorGroup.put(Model.COGVIEW_3_Plus, glmExecutor);
+        this.executorGroup.put(Model.COGVIEW_3_Flash, glmExecutor);
+        this.executorGroup.put(Model.COGVIDEOX, glmExecutor);
+        this.executorGroup.put(Model.COGVIDEOX_Flash, glmExecutor);
+        this.executorGroup.put(Model.COGVIDEOX_2, glmExecutor);
         return this.executorGroup;
     }
 
