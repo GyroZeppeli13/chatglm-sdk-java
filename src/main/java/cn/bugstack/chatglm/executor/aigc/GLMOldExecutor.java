@@ -109,5 +109,19 @@ public class GLMOldExecutor implements Executor {
     public VideoCompletionResponse genVideo(VideoCompletionRequest request) {
         throw new RuntimeException("旧版无视频生成接口");
     }
-    
+
+    @Override
+    public String getVideoTaskId(VideoCompletionRequest request) {
+        throw new RuntimeException("旧版无视频生成接口");
+    }
+
+    @Override
+    public VideoCompletionResponse getVideoByTaskId(String id) {
+        throw new RuntimeException("旧版无视频生成接口");
+    }
+
+    @Override
+    public VideoCompletionResponse tryGetVideoByTaskId(String id) {
+        throw new RuntimeException("旧版无视频生成接口");
+    }
 }

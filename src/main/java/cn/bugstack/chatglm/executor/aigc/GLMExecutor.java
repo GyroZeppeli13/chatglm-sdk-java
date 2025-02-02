@@ -153,7 +153,6 @@ public class GLMExecutor implements Executor, ResultHandler {
         VideoRequestIdTaskCompletionResponse videoRequestIdTaskCompletionResponse = openAiApi.getVideoTaskId(request).blockingGet();
         String id = videoRequestIdTaskCompletionResponse.getId();
         // 2. 任务结果查询
-        // 2025.2.1 测试生成一个“生成一个猫拍手的动画，模仿Happy猫” 花费大约 2min
         int count = 20; //处理中状态重试次数
         while (count-- > 0) {
             VideoCompletionResponse videoCompletionResponse = openAiApi.genVideo(id).blockingGet();
@@ -171,7 +170,35 @@ public class GLMExecutor implements Executor, ResultHandler {
         throw new RuntimeException("生成视频请求超时！");
     }
 
+    @Override
+    public String getVideoTaskId(VideoCompletionRequest request) {
+        VideoRequestIdTaskCompletionResponse videoRequestIdTaskCompletionResponse = openAiApi.getVideoTaskId(request).blockingGet();
+        return videoRequestIdTaskCompletionResponse.getId();
+    }
 
+    @Override
+    public VideoCompletionResponse getVideoByTaskId(String id) throws Exception {
+        int count = 20; //处理中状态重试次数
+        while (count-- > 0) {
+            VideoCompletionResponse videoCompletionResponse = openAiApi.genVideo(id).blockingGet();
+            // 成功则返回结果
+            if(videoCompletionResponse.getTaskStatus().equals(VideoCompletionResponse.taskStatus.SUCCESS.getStatus())) {
+                return videoCompletionResponse;
+            }
+            // 失败则抛出异常
+            else if(videoCompletionResponse.getTaskStatus().equals(VideoCompletionResponse.taskStatus.FAIL.getStatus())) {
+                throw new RuntimeException("生成视频请求失败！");
+            }
+            // 处理中则等待10s再请求
+            Thread.sleep( 10 * 1000);
+        }
+        throw new RuntimeException("生成视频请求超时！");
+    }
+
+    @Override
+    public VideoCompletionResponse tryGetVideoByTaskId(String id) {
+        return openAiApi.genVideo(id).blockingGet();
+    }
 
     @Override
     public EventSourceListener eventSourceListener(EventSourceListener eventSourceListener) {

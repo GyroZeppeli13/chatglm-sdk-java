@@ -68,6 +68,24 @@ public class DefaultOpenAiSession implements OpenAiSession {
         return executor.genVideo(videoCompletionRequest);
     }
 
+    @Override
+    public String getVideoTaskId(VideoCompletionRequest videoCompletionRequest) throws Exception {
+        Executor executor = executorGroup.get(videoCompletionRequest.getModelEnum());
+        if (null == executor) throw new RuntimeException(videoCompletionRequest.getModel() + " 模型执行器尚未实现！");
+        return executor.getVideoTaskId(videoCompletionRequest);
+    }
 
+    @Override
+    public VideoCompletionResponse getVideoByTaskId(String id, Model model) throws Exception {
+        Executor executor = executorGroup.get(model);
+        if (null == executor) throw new RuntimeException(model + " 模型执行器尚未实现！");
+        return executor.getVideoByTaskId(id);
+    }
 
+    @Override
+    public VideoCompletionResponse tryGetVideoByTaskId(String id, Model model) throws Exception {
+        Executor executor = executorGroup.get(model);
+        if (null == executor) throw new RuntimeException(model + " 模型执行器尚未实现！");
+        return executor.tryGetVideoByTaskId(id);
+    }
 }

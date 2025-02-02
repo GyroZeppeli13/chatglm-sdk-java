@@ -52,5 +52,24 @@ public interface Executor {
      */
     VideoCompletionResponse genVideo(VideoCompletionRequest request) throws Exception;
 
+    /**
+     * 获取视频生成任务id接口
+     * @param request 请求信息
+     * @return 任务id
+     */
+    String getVideoTaskId(VideoCompletionRequest request);
 
+    /**
+     * 根据任务id获取生成视频接口，同步反馈
+     * @param id 任务id
+     * @return 应答结果
+     */
+    VideoCompletionResponse getVideoByTaskId(String id) throws Exception;
+
+    /**
+     * 尝试根据任务id获取生成视频接口
+     * @param id 任务id
+     * @return 应答结果
+     */
+    VideoCompletionResponse tryGetVideoByTaskId(String id);
 }

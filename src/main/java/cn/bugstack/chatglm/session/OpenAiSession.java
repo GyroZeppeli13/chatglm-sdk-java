@@ -28,5 +28,10 @@ public interface OpenAiSession {
 
     VideoCompletionResponse genVideo(VideoCompletionRequest videoCompletionRequest) throws Exception;
 
+    String getVideoTaskId(VideoCompletionRequest videoCompletionRequest) throws Exception;
+
+    VideoCompletionResponse getVideoByTaskId(String id, Model model) throws Exception;
+
+    VideoCompletionResponse tryGetVideoByTaskId(String id, Model model) throws Exception;
 
 }
